@@ -7,6 +7,7 @@ import * as Sharing from 'expo-sharing';
 
 import { styles } from './styles.js';
 
+// TO DO: Split this SFC into a separate file.
 const Home = (props) => (
   <View style={styles.container}>
     <Text style={styles.heading}>Open up App.js to start working on your app!</Text>
