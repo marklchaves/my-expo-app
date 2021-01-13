@@ -1,30 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing'; 
 
+import Home from './Home.js';
 import { styles } from './styles.js';
-
-// TO DO: Split this SFC into a separate file.
-const Home = (props) => (
-  <View style={styles.container}>
-    <Text style={styles.heading}>Open up App.js to start working on your app!</Text>
-    <StatusBar style="auto" />
-
-    <Image source={{ uri: 'https://i.imgur.com/TkIrScD.png' }} style={styles.logo} />
-    <Text style={styles.instructions}>
-      To share a photo from your phone with a friend, just press the button below!
-    </Text>
-
-    <TouchableOpacity
-      onPress={props.openImagePickerAsync}
-      style={styles.button}>
-      <Text style={styles.buttonText}>Pick a photo</Text>
-    </TouchableOpacity>
-  </View>
-);
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
