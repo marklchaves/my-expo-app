@@ -7,7 +7,7 @@ import { styles } from './styles.js';
 const Home = (props) => (
   <View style={styles.container}>
     <Text style={styles.heading}>
-      Open up App.js to start working on your app!
+      Welcome to
     </Text>
     <StatusBar style="auto" />
 

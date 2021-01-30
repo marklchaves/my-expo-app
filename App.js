@@ -42,9 +42,12 @@ export default class App extends React.Component {
     await Sharing.shareAsync(this.state.selectedImage.localUri);
   };
 
+  // Set the URI to null to get back to the home screen.
+  goHome = () => {
+    this.setState({ selectedImage: { localUri: null }});
+  }
+
   render() {
-    // TO DO: Build cancel option here. Look at CS50M
-    //        toggling state.
     if (this.state.selectedImage.localUri !== null) {
       return (
         <View style={styles.container}>
@@ -57,6 +60,12 @@ export default class App extends React.Component {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Share this photo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.goHome}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       );

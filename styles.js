@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   thumbnail: {
+    marginBottom: 5,
     width: 300,
     height: 300,
     resizeMode: "contain"
