@@ -1,16 +1,21 @@
-import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
-import * as ImagePicker from 'expo-image-picker';
-import * as Sharing from 'expo-sharing'; 
+import * as ImagePicker from "expo-image-picker";
+import * as Sharing from "expo-sharing";
 
-import Home from './Home.js';
-import { styles } from './styles.js';
+import Home from "./Home.js";
+import { styles } from "./styles.js";
 
-export default function App() {
-  const [selectedImage, setSelectedImage] = React.useState(null);
+export default class App extends React.Component {
+  // const [selectedImage, setSelectedImage] = React.useState(null);
+  state = {
+    selectedImage: {
+      localUri: null
+    }
+  }
 
-  let openImagePickerAsync = async () => {
+  openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
@@ -19,41 +24,44 @@ export default function App() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log('pickerResult = ', pickerResult);
+    console.log("pickerResult = ", pickerResult);
 
     if (pickerResult.cancelled === true) {
-      return; 
+      return;
     }
 
-    setSelectedImage({ localUri: pickerResult.uri });
+    this.setState({ selectedImage: { localUri: pickerResult.uri }});
   };
 
-  let openShareDialogAsync = async () => {
+  openShareDialogAsync = async () => {
     if (!(await Sharing.isAvailableAsync())) {
       alert(`Uh oh, sharing isn't available on your platform`);
       return;
     }
 
-    await Sharing.shareAsync(selectedImage.localUri);
-  }; 
+    await Sharing.shareAsync(this.state.selectedImage.localUri);
+  };
 
-  // TO DO: Build cancel option here. Look at CS50M
-  //        toggling state.
-  if (selectedImage !== null) {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={{ uri: selectedImage.localUri }}
-          style={styles.thumbnail}
-        />
-        <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
-          <Text style={styles.buttonText}>Share this photo</Text>
-        </TouchableOpacity>
-      </View>
-    );
+  render() {
+    // TO DO: Build cancel option here. Look at CS50M
+    //        toggling state.
+    if (this.state.selectedImage.localUri !== null) {
+      return (
+        <View style={styles.container}>
+          <Image
+            source={{ uri: this.state.selectedImage.localUri }}
+            style={styles.thumbnail}
+          />
+          <TouchableOpacity
+            onPress={this.openShareDialogAsync}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Share this photo</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return <Home openImagePickerAsync={this.openImagePickerAsync} />;
   }
-
-  return (
-    <Home openImagePickerAsync={openImagePickerAsync} />
-  );
 }
