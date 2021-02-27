@@ -53,6 +53,7 @@ export default class App extends React.Component {
       return <Home openImagePickerAsync={this.openImagePickerAsync} />;
     }
 
+    // TO DO: Display buttons side by side.
     return (
       <View style={styles.container}>
         <Image
@@ -65,7 +66,10 @@ export default class App extends React.Component {
         >
           <Text style={styles.buttonText}>Share this photo</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.goHome} style={styles.button}>
+        <TouchableOpacity 
+          onPress={this.goHome} 
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
       </View>
