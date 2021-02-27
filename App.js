@@ -11,9 +11,9 @@ export default class App extends React.Component {
   // const [selectedImage, setSelectedImage] = React.useState(null);
   state = {
     selectedImage: {
-      localUri: null
-    }
-  }
+      localUri: null,
+    },
+  };
 
   openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -30,7 +30,7 @@ export default class App extends React.Component {
       return;
     }
 
-    this.setState({ selectedImage: { localUri: pickerResult.uri }});
+    this.setState({ selectedImage: { localUri: pickerResult.uri } });
   };
 
   openShareDialogAsync = async () => {
@@ -44,33 +44,31 @@ export default class App extends React.Component {
 
   // Set the URI to null to get back to the home screen.
   goHome = () => {
-    this.setState({ selectedImage: { localUri: null }});
-  }
+    this.setState({ selectedImage: { localUri: null } });
+  };
 
   render() {
-    if (this.state.selectedImage.localUri !== null) {
-      return (
-        <View style={styles.container}>
-          <Image
-            source={{ uri: this.state.selectedImage.localUri }}
-            style={styles.thumbnail}
-          />
-          <TouchableOpacity
-            onPress={this.openShareDialogAsync}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Share this photo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.goHome}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      );
+    // If no image selected, then show the home screen.
+    if (this.state.selectedImage.localUri === null) {
+      return <Home openImagePickerAsync={this.openImagePickerAsync} />;
     }
 
-    return <Home openImagePickerAsync={this.openImagePickerAsync} />;
+    return (
+      <View style={styles.container}>
+        <Image
+          source={{ uri: this.state.selectedImage.localUri }}
+          style={styles.thumbnail}
+        />
+        <TouchableOpacity
+          onPress={this.openShareDialogAsync}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Share this photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.goHome} style={styles.button}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 }
